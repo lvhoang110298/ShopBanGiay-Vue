@@ -1,5 +1,5 @@
 <template>
-  <h1>Detail</h1>
+  <h1>Shoes _id page</h1>
 </template>
 
 <script lang="ts">

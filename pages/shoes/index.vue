@@ -1,5 +1,5 @@
 <template>
-  <h1>asd</h1>
+  <h1>index Shoes page</h1>
 </template>
 
 <script lang="ts">
