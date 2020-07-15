@@ -20,10 +20,11 @@ const actions = {
   setShoes({ commit }: any, payload: any) {
     commit('SET_SHOES', payload)
   },
-  getNewProduct({ commit }: any) {
+  getAllProduct({ commit }: any) {
     return API.get('/client/shoes').then((res) => {
-      const data = res.data.data
-      commit('SET_SHOES_LIST', data)
+      const responseJSON = res.data.data
+      const response = JSON.parse(responseJSON)
+      commit('SET_SHOES_LIST', response)
     })
   },
 }
