@@ -15,6 +15,9 @@ const mutations = {
   SET_SHOES_LIST(state: any, payload: any) {
     state.shoesList = payload
   },
+  SET_SHOES(state: any, payload: any) {
+    state.shoes = payload
+  },
 }
 const actions = {
   setShoes({ commit }: any, payload: any) {
@@ -25,6 +28,13 @@ const actions = {
       const responseJSON = res.data.data
       const response = JSON.parse(responseJSON)
       commit('SET_SHOES_LIST', response)
+    })
+  },
+  getProductById({ commit }: any, id: any) {
+    return API.get(`/client/shoes/${id}`).then((res) => {
+      const responseJSON = res.data.data
+      const response = JSON.parse(responseJSON)
+      commit('SET_SHOES', response)
     })
   },
 }
