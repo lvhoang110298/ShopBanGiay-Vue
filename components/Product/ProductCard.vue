@@ -2,7 +2,7 @@
   <v-hover v-slot:default="{ hover }">
     <v-card
       @click="handleClick"
-      style="min-height: 135px !important;"
+      style="height: 135px !important;"
       class="mx-auto"
     >
       <v-row>
@@ -35,7 +35,6 @@ export default class ProductCard extends Vue {
   })
   product!: any
   formatMoney = (num: any) => {
-    console.log(1, num)
     let p = num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
     p = p.slice(0, p.length - 3)
     return p

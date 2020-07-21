@@ -40,11 +40,13 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class Login extends Vue {
   name = ''
   password = ''
-  loginClick() {
-    this.$store.dispatch('signUserIn', {
+
+  async loginClick() {
+    await this.$store.dispatch('signUserIn', {
       name: this.name,
       password: this.password,
     })
+    // location.pathname = '/'
   }
 }
 </script>

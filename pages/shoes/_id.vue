@@ -68,7 +68,7 @@
             <v-divider class="mx-5" light></v-divider>
             <v-card-text>
               <span>Mens's size</span>
-              <div :v-model="size" class="d-flex flex-row justify-start">
+              <div class="d-flex flex-row justify-start">
                 <div
                   class="pr-2"
                   v-for="(size, i) in productItem.sizes"
@@ -76,7 +76,7 @@
                 >
                   <v-btn
                     :outlined="sizeSelect === size.sizeName ? true : false"
-                    @click="handleSizeClick(size.sizeName)"
+                    @click="handleSizeClick(size)"
                     small
                     >{{ size.sizeName }}</v-btn
                   >
@@ -85,7 +85,12 @@
             </v-card-text>
             <v-card-actions>
               <v-hover v-slot:default="{ hover }">
-                <v-btn block large :color="hover ? '#FFAB00' : '#FFC400'">
+                <v-btn
+                  @click="handleAddCart"
+                  block
+                  large
+                  :color="hover ? '#FFAB00' : '#FFC400'"
+                >
                   Add To Card
                 </v-btn>
               </v-hover>
@@ -113,6 +118,7 @@ export default class shoesDetail extends Vue {
   productItem: any
   productId: any
   sizeSelect: string = ''
+  stockId = ''
 
   formatMoney = (num: any) => {
     console.log(1, num)
@@ -121,9 +127,28 @@ export default class shoesDetail extends Vue {
     return p
   }
 
-  handleSizeClick(value: string) {
-    this.sizeSelect = value
-    console.log(typeof this.sizeSelect)
+  handleAddCart() {
+    if (!localStorage.getItem('identity')) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || []
+
+      let obj = cart.find(
+        (x) => x.stockId === this.stockId && x.shoesId === this.productItem.id
+      )
+
+      if (obj) obj.quantity += 1
+      else
+        cart.push({
+          shoesId: this.productItem.id,
+          stockId: this.stockId,
+          quantity: 1,
+        })
+      localStorage.setItem('cart', JSON.stringify(cart))
+    }
+  }
+
+  handleSizeClick(size: any) {
+    this.sizeSelect = size.sizeName
+    this.stockId = size.stockId
   }
   async mounted() {
     await this.$store.dispatch(

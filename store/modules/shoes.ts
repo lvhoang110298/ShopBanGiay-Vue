@@ -3,12 +3,19 @@ const initState = () => {
   return {
     shoesList: [],
     shoes: {},
+    shoesMen: [],
+    shoesWomen: [],
   }
 }
 const getters = {
   getShoesList(state: any, getters: any): any {
-    console.log(22, state)
     return state.shoesList
+  },
+  getShoesMen(state: any, getters: any): any {
+    return state.shoesMen
+  },
+  getShoesWomen(state: any, getters: any): any {
+    return state.shoesWomen
   },
 }
 const mutations = {
@@ -17,6 +24,12 @@ const mutations = {
   },
   SET_SHOES(state: any, payload: any) {
     state.shoes = payload
+  },
+  SET_SHOES_MEN(state: any, payload: any) {
+    state.shoesMen = payload
+  },
+  SET_SHOES_WOMEN(state: any, payload: any) {
+    state.shoesWomen = payload
   },
 }
 const actions = {
@@ -35,6 +48,22 @@ const actions = {
       const responseJSON = res.data.data
       const response = JSON.parse(responseJSON)
       commit('SET_SHOES', response)
+    })
+  },
+  getMenProduct({ commit }: any) {
+    const params = { gender: 'nam' }
+    return API.get(`/client/shoes`, { params }).then((res) => {
+      const responseJSON = res.data.data
+      const response = JSON.parse(responseJSON)
+      commit('SET_SHOES_MEN', response)
+    })
+  },
+  getWomenProduct({ commit }: any) {
+    const params = { gender: 'nữ' }
+    return API.get(`/client/shoes`, { params }).then((res) => {
+      const responseJSON = res.data.data
+      const response = JSON.parse(responseJSON)
+      commit('SET_SHOES_WOMEN', response)
     })
   },
 }
