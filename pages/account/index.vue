@@ -16,7 +16,7 @@
         <!-- info -->
         <AccountInfo v-if="i === 1"></AccountInfo>
         <!-- address -->
-        <AccountAddress v-if="i === 2"></AccountAddress>
+        <AccountAddress :action="action" v-if="i === 2"></AccountAddress>
         <!-- order -->
         <Order v-if="i === 3"></Order>
       </v-tab-item>
@@ -40,6 +40,7 @@ import Order from '../../components/Order/Order.vue'
 })
 export default class Account extends Vue {
   tab = null
+  action = 1
   items = ['Change Password', 'Account Info', 'Address', 'My Order']
   handleClick(item: any) {
     console.log(item)

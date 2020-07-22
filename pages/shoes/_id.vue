@@ -144,6 +144,11 @@ export default class shoesDetail extends Vue {
         })
       localStorage.setItem('cart', JSON.stringify(cart))
     }
+    this.$store.dispatch('addProductToCart', {
+      shoesId: this.productItem.id,
+      stockId: this.stockId,
+      sizeName: this.sizeSelect,
+    })
   }
 
   handleSizeClick(size: any) {
@@ -155,7 +160,6 @@ export default class shoesDetail extends Vue {
       'getProductById',
       this.$router.currentRoute.params.id
     )
-    console.log(11, this.productItem)
   }
 }
 </script>

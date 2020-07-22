@@ -61,7 +61,12 @@
           </v-card-title>
           <v-card-text>
             <v-hover v-slot:default="{ hover }">
-              <v-btn block x-large :color="hover ? '#FFAB00' : '#FFC400'">
+              <v-btn
+                href="/checkout"
+                block
+                x-large
+                :color="hover ? '#FFAB00' : '#FFC400'"
+              >
                 Checkout
               </v-btn>
             </v-hover>
@@ -87,15 +92,16 @@ export default class Cart extends Vue {
 
   get totalCart() {
     let temp = 0
-    for (let item of this.productItems) {
-      temp = temp + item.price * item.quantity
-      console.log(temp)
-    }
-    return temp
+    if (this.productItems) {
+      for (let item of this.productItems) {
+        temp = temp + item.price * item.quantity
+        console.log(temp)
+        return temp
+      }
+    } else return 0
   }
 
   formatMoney = (num: any) => {
-    console.log(1, num)
     let p = num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
     p = p.slice(0, p.length - 3)
     return p
@@ -112,9 +118,7 @@ export default class Cart extends Vue {
     }
   }
   async mounted() {
-    if (localStorage.getItem('identity')) {
-      await this.$store.dispatch('getCartItems')
-    }
+    await this.$store.dispatch('getCartItems')
   }
 }
 </script>

@@ -19,10 +19,10 @@ const actions = {
     const token = localStorage.getItem('identity')
     const AuthStr = 'Bearer ' + token
     return await API.get(path, { headers: { Authorization: AuthStr } }).then(
-      (res) => {
+      async (res) => {
         const responseJSON = res.data.data
         const response = JSON.parse(responseJSON)
-        commit('SET_CART', response)
+        await commit('SET_CART', response)
       }
     )
   },
@@ -33,6 +33,23 @@ const actions = {
   //     const shoesList = cart.map( e => )
   //   }
   // }
+
+  async addProductToCart({ commit }: any, { shoesId, sizeName, stockId }: any) {
+    const path = 'client/cart/add'
+    const token = localStorage.getItem('identity')
+    const AuthStr = 'Bearer ' + token
+    return await API.post(
+      path,
+      { shoesId, sizeName, quantity: 1, stockId },
+      {
+        headers: { Authorization: AuthStr },
+      }
+    ).then((res) => {
+      const responseJSON = res.data.data
+      const response = JSON.parse(responseJSON)
+      commit('SET_CART', response)
+    })
+  },
   async syncCart({ commit }: any) {
     const cart = JSON.parse(localStorage.getItem('cart') || '{}')
     const path = 'client/cart/sync'
